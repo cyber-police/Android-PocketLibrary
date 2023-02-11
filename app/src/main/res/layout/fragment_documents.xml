@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    style="@style/CustomCardView"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_view_shape">
+
+        <ImageView
+            android:id="@+id/idIVBook"
+            android:layout_width="130dp"
+            android:layout_height="160dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/idTVTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/idIVBook"
+            android:padding="3dp"
+            android:text="@string/documentTitle"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/idTVAuthors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVTitle"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/idIVBook"
+            android:padding="3dp"
+            android:text="@string/documentAuthor"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/idTVPageCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVAuthors"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/idIVBook"
+            android:padding="3dp"
+            android:text="@string/numberOfPages"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/idTVDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVPageCount"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:padding="3dp"
+            android:text="@string/date"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/idTVRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idTVDate"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:padding="3dp"
+            android:text="@string/rating"
+            android:textSize="11sp" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
