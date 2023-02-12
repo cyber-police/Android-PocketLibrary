@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/idIVAuthor"
             android:padding="3dp"
-            android:text="@string/authorName"
+            android:text="@string/author_name"
             android:textSize="11sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
             android:padding="3dp"
-            android:text="@string/datesOfLiving"
+            android:text="@string/dates_of_living"
             android:textSize="11sp" />
 
         <TextView

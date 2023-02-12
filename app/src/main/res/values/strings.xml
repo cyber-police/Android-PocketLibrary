@@ -4,14 +4,14 @@
     <string name="authors">Authors</string>
     <string name="documents">Documents</string>
     <string name="title_activity_documents_details">DocumentsDetails</string>
-    <string name="documentTitle">Document Title</string>
-    <string name="documentAuthor">Document Author</string>
-    <string name="numberOfPages">Number of Pages</string>
+    <string name="document_title">Document Title</string>
+    <string name="document_author">Document Author</string>
+    <string name="number_of_pages">Number of Pages</string>
     <string name="date">Publish Date</string>
     <string name="rating">Rating</string>
-    <string name="authorName">Author Name</string>
-    <string name="categoryName">Category Name</string>
-    <string name="datesOfLiving">datesOfLiving</string>
+    <string name="author_name">Author Name</string>
+    <string name="category_name">Category Name</string>
+    <string name="dates_of_living">datesOfLiving</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -102,10 +102,12 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="languages">languages</string>
+    <string name="leave_respond_app">Leave a response about this app!</string>
+    <string name="leave_respond_document">Leave a response about this</string>
+    <string name="languages">Languages</string>
     <string name="description">description</string>
     <string name="preview">Preview</string>
     <string name="buy">Buy</string>
+    <string name="email">Email</string>
+    <string name="your_text">Your expressions, wishes, questions…</string>
 </resources>

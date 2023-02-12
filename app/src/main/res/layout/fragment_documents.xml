@@ -27,7 +27,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
-            android:text="@string/documentTitle"
+            android:text="@string/document_title"
             android:textSize="11sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
-            android:text="@string/documentAuthor"
+            android:text="@string/document_author"
             android:textSize="11sp" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_marginTop="3dp"
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
-            android:text="@string/numberOfPages"
+            android:text="@string/number_of_pages"
             android:textSize="11sp" />
 
         <TextView

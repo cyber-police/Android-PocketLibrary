@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -27,7 +26,7 @@ public class DocumentsDetails extends AppCompatActivity {
     private ActivityBookDetailsBinding binding;
 
     // creating variables for strings,text view, image views and button.
-    String title, language, description, previewLink, buyLink, readLink;
+    String title, language, type, description, previewLink, buyLink, readLink;
     boolean isAvailable;
     int publishedDate;
     float rating, price;
@@ -61,6 +60,7 @@ public class DocumentsDetails extends AppCompatActivity {
         // getting the data which we have passed from our adapter class.
         title = getIntent().getStringExtra("title");
         language = getIntent().getStringExtra("language");
+        type = getIntent().getStringExtra("type");
         isAvailable = getIntent().getBooleanExtra("available", false);
         authors = getIntent().getStringArrayListExtra("authors");
         publishedDate = getIntent().getIntExtra("publishedDate", 0);
@@ -93,9 +93,9 @@ public class DocumentsDetails extends AppCompatActivity {
 
         // adding on click listener for our preview button.
         previewBtn.setOnClickListener(v -> {
-            if (previewLink.isEmpty()) {
+            if (previewLink == null) {
                 // below toast message is displayed when preview link is not present.
-                Toast.makeText(DocumentsDetails.this, "No preview Link present", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DocumentsDetails.this, "No preview link present", Toast.LENGTH_SHORT).show();
                 return;
             }
             // if the link is present we are opening
@@ -107,9 +107,9 @@ public class DocumentsDetails extends AppCompatActivity {
 
         // initializing on click listener for buy button.
         buyBtn.setOnClickListener(v -> {
-            if (buyLink.isEmpty()) {
+            if (buyLink == null) {
                 // below toast message is displaying when buy link is empty.
-                Toast.makeText(DocumentsDetails.this, "No buy page present for this book", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DocumentsDetails.this, "No buy page present for this " + type, Toast.LENGTH_SHORT).show();
                 return;
             }
             // if the link is present we are opening
@@ -124,8 +124,7 @@ public class DocumentsDetails extends AppCompatActivity {
         CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
         toolBarLayout.setTitle(getTitle());
 
-        FloatingActionButton fab = binding.fab;
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> RespondFragment.newInstance(getString(R.string.leave_respond_document) + " " + type + "!").show(getSupportFragmentManager(), ""));
     }
 }

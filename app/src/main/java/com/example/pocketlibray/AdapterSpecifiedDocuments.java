@@ -74,6 +74,7 @@ public class AdapterSpecifiedDocuments extends RecyclerView.Adapter<AdapterSpeci
                 Intent i = new Intent(context, DocumentsDetails.class);
                 i.putExtra("title", documentsInfo.getTitle());
                 i.putExtra("language", documentsInfo.getLanguage());
+                i.putExtra("type", documentsInfo.getType());
                 i.putExtra("available", documentsInfo.getAvailability());
                 i.putExtra("authors", documentsInfo.getAuthors());
                 i.putExtra("rating", documentsInfo.getRating());

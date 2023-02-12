@@ -19,9 +19,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -119,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     String title = resultSet.getString("file_name");
                     String language = resultSet.getString("file_language");
                     String category = resultSet.getString("file_category");
+                    String type = resultSet.getString("type_file");
                     boolean availability = resultSet.getBoolean("is_available");
                     ArrayList<String> authorsArray = new ArrayList<>();
                     authorsArray.add(resultSet.getString("file_author"));
@@ -134,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     //String infoLink =
 
                     // many-to-many connection
-                    documentsInfo = new DocumentsInfo(title, language, category, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
+                    documentsInfo = new DocumentsInfo(title, language, category, type, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
                     if (documentsInfoArrayList.isEmpty()) {
                         documentsInfoArrayList.add(documentsInfo);
                     } else {
@@ -183,5 +181,9 @@ public class MainActivity extends AppCompatActivity {
             Log.e("error", e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public void leaveResponse(View view) {
+        RespondFragment.newInstance(getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), "");
     }
 }
