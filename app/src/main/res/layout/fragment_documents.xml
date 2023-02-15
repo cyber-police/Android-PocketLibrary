@@ -28,7 +28,7 @@
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
             android:text="@string/document_title"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/idTVAuthors"
@@ -39,7 +39,7 @@
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
             android:text="@string/document_author"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/idTVPageCount"
@@ -50,7 +50,7 @@
             android:layout_toEndOf="@id/idIVBook"
             android:padding="3dp"
             android:text="@string/number_of_pages"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/idTVDate"
@@ -61,7 +61,7 @@
             android:layout_marginEnd="5dp"
             android:padding="3dp"
             android:text="@string/date"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/idTVRating"
@@ -72,7 +72,7 @@
             android:layout_marginEnd="5dp"
             android:padding="3dp"
             android:text="@string/rating"
-            android:textSize="11sp" />
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

@@ -2,9 +2,14 @@ package com.example.pocketlibray;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.text.TextUtils;
@@ -13,9 +18,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Objects;
+import com.google.android.material.snackbar.Snackbar;
 
 public class RespondFragment extends DialogFragment {
+
+    private Context context;
 
     @NonNull
     @Override
@@ -43,6 +50,19 @@ public class RespondFragment extends DialogFragment {
                     }
                 } else {
                     alertDialog.dismiss();
+                    if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
+                        if (context instanceof MainActivity) {
+                            fireNotification("Your responds help us make application better...");
+                        } else if (context instanceof DocumentsDetails) {
+                            fireNotification("Your message were successfully delivered...");
+                        }
+                    } else {
+                        if (context instanceof MainActivity) {
+                            Snackbar.make(((MainActivity) context).findViewById(R.id.idRV).getRootView(), R.string.respond_title, Snackbar.LENGTH_LONG).show();
+                        } else if (context instanceof DocumentsDetails) {
+                            Snackbar.make(((DocumentsDetails) context).findViewById(R.id.idBtnBuy).getRootView(), R.string.respond_title, Snackbar.LENGTH_LONG).show();
+                        }
+                    }
                 }
             });
         });
@@ -50,11 +70,31 @@ public class RespondFragment extends DialogFragment {
         return alertDialog;
     }
 
-    public static RespondFragment newInstance(String title) {
-        RespondFragment respondFragment = new RespondFragment();
+    public void fireNotification(String subtext) {
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, getString(R.string.channel_id))
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle(getString(R.string.respond_title))
+                .setContentText(subtext)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        createNotificationChannel();
+        notificationManager.notify(R.string.channel_id, notificationBuilder.build());
+    }
+
+    private void createNotificationChannel() {
+        CharSequence name = getString(R.string.channel_name);
+        String description = getString(R.string.channel_description);
+        int importance = NotificationManager.IMPORTANCE_DEFAULT;
+        NotificationChannel channel = new NotificationChannel(getString(R.string.channel_id), name, importance);
+        channel.setDescription(description);
+        NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+        notificationManager.createNotificationChannel(channel);
+    }
+
+    public RespondFragment(Context context, String title) {
+        this.context = context;
         Bundle args = new Bundle();
         args.putString("title", title);
-        respondFragment.setArguments(args);
-        return respondFragment;
+        this.setArguments(args);
     }
 }

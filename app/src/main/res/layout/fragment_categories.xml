@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:text="@string/category_name"
-            android:textSize="36sp" />
+            android:textSize="24sp" />
 
     </RelativeLayout>
 

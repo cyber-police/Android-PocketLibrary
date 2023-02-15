@@ -110,4 +110,8 @@
     <string name="buy">Buy</string>
     <string name="email">Email</string>
     <string name="your_text">Your expressions, wishes, questions…</string>
+    <string name="channel_name">Response was sent</string>
+    <string name="channel_description">Notification that fires after clicking SEND button</string>
+    <string name="channel_id">response_notification_id</string>
+    <string name="respond_title">Thanks for your responding!</string>
 </resources>

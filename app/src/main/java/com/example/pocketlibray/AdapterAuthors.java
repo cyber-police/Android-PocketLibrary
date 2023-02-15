@@ -22,11 +22,13 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
 
     // creating variables for arraylist and context.
     private ArrayList<AuthorsInfo> authorsInfoArrayList;
+    private ArrayList<DocumentsInfo> documentsInfoArrayList;
     private Context context;
 
     // creating constructor for array list and context.
-    public AdapterAuthors(ArrayList<AuthorsInfo> authorsInfoArrayList, Context context) {
+    public AdapterAuthors(ArrayList<AuthorsInfo> authorsInfoArrayList, ArrayList<DocumentsInfo> documentsInfoArrayList, Context context) {
         this.authorsInfoArrayList = authorsInfoArrayList;
+        this.documentsInfoArrayList = documentsInfoArrayList;
         this.context = context;
     }
 
@@ -45,6 +47,7 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
         // inside on bind view holder method we are
         // setting ou data to each UI component.
         AuthorsInfo authorsInfo = authorsInfoArrayList.get(position);
+        float authorsRating = 0, numberOfWrittenDocuments = 0;
 
         holder.nameTV.setText(authorsInfo.getName());
         if (authorsInfo.getStatus()) {
@@ -52,6 +55,13 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
         } else {
             holder.datesOfLivingTV.setText(authorsInfo.getBirthDate());
         }
+        for (DocumentsInfo documentsInfo : documentsInfoArrayList) {
+            if (documentsInfo.getAuthors().contains(authorsInfo.getName())) {
+                numberOfWrittenDocuments++;
+                authorsRating += documentsInfo.getRating();
+            }
+        }
+        holder.ratingTV.setText(Float.toString(authorsRating / numberOfWrittenDocuments));
         // below line is use to set image from URL in our image view.
         Picasso.get().load("https://static-00.iconduck.com/assets.00/incognito-icon-512x487-o2l6p9u6.png").into(holder.authorIV);
         // change image color using themes

@@ -125,6 +125,6 @@ public class DocumentsDetails extends AppCompatActivity {
         toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> RespondFragment.newInstance(getString(R.string.leave_respond_document) + " " + type + "!").show(getSupportFragmentManager(), ""));
+        fab.setOnClickListener(view -> new RespondFragment(this, getString(R.string.leave_respond_document) + " " + type + "!").show(getSupportFragmentManager(), ""));
     }
 }

@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillCategories(int param) {
         findViewById(R.id.backButton).setVisibility(View.GONE);
+        findViewById(R.id.backButton).setOnClickListener(null);
         currentTabPosition = param;
         if (param == 0) {
             mRecyclerView.setAdapter(adapterDocuments);
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                     authorsInfo = new AuthorsInfo(name, birthDate, isDead, deathDate);
                     authorsInfoArrayList.add(authorsInfo);
 
-                    adapterAuthors = new AdapterAuthors(authorsInfoArrayList, MainActivity.this);
+                    adapterAuthors = new AdapterAuthors(authorsInfoArrayList, documentsInfoArrayList, MainActivity.this);
                 }
 
                 Statement categoriesStatement = connection.createStatement();
@@ -184,6 +185,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void leaveResponse(View view) {
-        RespondFragment.newInstance(getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), "");
+        new RespondFragment(this, getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), "");
     }
 }
