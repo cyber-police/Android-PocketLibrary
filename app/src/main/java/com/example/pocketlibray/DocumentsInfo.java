@@ -7,6 +7,7 @@ public class DocumentsInfo {
     private String language;
     private String category;
     private String type;
+    private int readTimes;
     private boolean availability;
     private ArrayList<String> authors;
     private float rating;
@@ -48,6 +49,14 @@ public class DocumentsInfo {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getReadTimes() {
+        return readTimes;
+    }
+
+    public void setReadTimes(int readTimes) {
+        this.readTimes = readTimes;
     }
 
     public boolean getAvailability() {
@@ -131,13 +140,14 @@ public class DocumentsInfo {
     }
 
     // creating a constructor class for our BookInfo
-    public DocumentsInfo(String title, String language, String category, String type, boolean availability, ArrayList<String> authors, float rating,
+    public DocumentsInfo(String title, String language, String category, String type, int readTimes, boolean availability, ArrayList<String> authors, float rating,
                          int yearOfPublishing, String description, int pageCount, float price,
                          boolean isFree) {
         this.title = title;
         this.language = language;
         this.category = category;
         this.type = type;
+        this.readTimes = readTimes;
         this.availability = availability;
         this.authors = authors;
         this.rating = rating;

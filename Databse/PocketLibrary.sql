@@ -141,4 +141,6 @@ INNER JOIN library_file ON library_file.file_id = author_file_connection.file_id
 INNER JOIN file_author ON file_author.file_author_id = author_file_connection.file_author_id
 INNER JOIN file_type ON library_file.file_type_id = file_type.file_type_id
 INNER JOIN file_category ON library_file.file_category_id = file_category.file_category_id
-INNER JOIN file_language ON library_file.file_language_id = file_language.file_language_id;
+INNER JOIN file_language ON library_file.file_language_id = file_language.file_language_id
+WHERE library_file.rating > 4.0
+ORDER BY library_file.rating DESC;

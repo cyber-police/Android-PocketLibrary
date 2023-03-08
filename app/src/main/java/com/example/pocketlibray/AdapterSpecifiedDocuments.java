@@ -113,10 +113,10 @@ public class AdapterSpecifiedDocuments extends RecyclerView.Adapter<AdapterSpeci
         public BookViewHolder(View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.idTVTitle);
-            authorsTV = itemView.findViewById(R.id.idTVAuthors);
-            pageCountTV = itemView.findViewById(R.id.idTVPageCount);
+            //authorsTV = itemView.findViewById(R.id.idTVAuthors);
+            //pageCountTV = itemView.findViewById(R.id.idTVPageCount);
             dateTV = itemView.findViewById(R.id.idTVDate);
-            ratingTV = itemView.findViewById(R.id.idTVRating);
+            //ratingTV = itemView.findViewById(R.id.idTVRating);
             bookIV = itemView.findViewById(R.id.idIVBook);
         }
     }

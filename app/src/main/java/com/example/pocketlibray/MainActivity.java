@@ -2,6 +2,11 @@ package com.example.pocketlibray;
 
 import android.os.Bundle;
 
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.pocketlibray.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
@@ -22,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+
     private ArrayList<DocumentsInfo> documentsInfoArrayList;
     private ArrayList<AuthorsInfo> authorsInfoArrayList;
     private ArrayList<CategoriesInfo> categoriesInfoArrayList;
@@ -42,39 +52,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        mRecyclerView = findViewById(R.id.idRV);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+//        mRecyclerView = findViewById(R.id.idRV);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
+//        mRecyclerView.setLayoutManager(linearLayoutManager);
         connectionHelper = new ConnectionHelper();
         documentsInfoArrayList = new ArrayList<>();
         authorsInfoArrayList = new ArrayList<>();
         categoriesInfoArrayList = new ArrayList<>();
 
-        getTextFromSQL();
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                fillCategories(tab.getPosition());
-            }
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment);
+        NavController navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(binding.navView, navController);
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-            }
-
-        });
+        //getTextFromSQL();
     }
 
     private void fillCategories(int param) {
-        findViewById(R.id.backButton).setVisibility(View.GONE);
-        findViewById(R.id.backButton).setOnClickListener(null);
         currentTabPosition = param;
         if (param == 0) {
             mRecyclerView.setAdapter(adapterDocuments);
@@ -87,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void specificClicked(String chosenSpecific) {
         adapterSpecifiedDocuments = new AdapterSpecifiedDocuments(documentsInfoArrayList, MainActivity.this, chosenSpecific);
-        findViewById(R.id.backButton).setVisibility(View.VISIBLE);
-        findViewById(R.id.backButton).setOnClickListener(view ->
-                fillCategories(currentTabPosition)
-        );
         mRecyclerView.setAdapter(adapterSpecifiedDocuments);
     }
 
@@ -118,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     String language = resultSet.getString("file_language");
                     String category = resultSet.getString("file_category");
                     String type = resultSet.getString("type_file");
+                    int readTimes = resultSet.getInt("how_many_times_read");
                     boolean availability = resultSet.getBoolean("is_available");
                     ArrayList<String> authorsArray = new ArrayList<>();
                     authorsArray.add(resultSet.getString("file_author"));
@@ -133,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                     //String infoLink =
 
                     // many-to-many connection
-                    documentsInfo = new DocumentsInfo(title, language, category, type, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
+                    documentsInfo = new DocumentsInfo(title, language, category, type, readTimes, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
                     if (documentsInfoArrayList.isEmpty()) {
                         documentsInfoArrayList.add(documentsInfo);
                     } else {

@@ -10,7 +10,7 @@ public class ConnectionHelper {
     String uname, pass, ip, port, database;
 
     public Connection connectionClass() {
-        ip = "192.168.1.4";
+        ip = "192.168.1.3";
         database = "MyLibrary";
         uname = "tseholnik";
         pass = "root123";

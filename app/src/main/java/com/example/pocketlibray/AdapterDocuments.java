@@ -44,21 +44,12 @@ public class AdapterDocuments extends RecyclerView.Adapter<AdapterDocuments.Book
         // setting ou data to each UI component.
         DocumentsInfo documentsInfo = documentsInfoArrayList.get(position);
 
-        StringBuilder authorsBuilder = new StringBuilder();
-        int iterator = 0;
-        for (String str : documentsInfo.getAuthors()) {
-            if (iterator++ != documentsInfo.getAuthors().size() - 1) {
-                authorsBuilder.append(str).append(", ");
-            } else {
-                authorsBuilder.append(str);
-            }
-        }
-
         holder.titleTV.setText(documentsInfo.getTitle());
-        holder.authorsTV.setText(authorsBuilder.toString().trim());
-        holder.pageCountTV.setText("No of Pages : " + documentsInfo.getPageCount());
-        holder.dateTV.setText(String.valueOf(documentsInfo.getPublishedDate()));
-        holder.ratingTV.setText(String.valueOf(documentsInfo.getRating()));
+        if (documentsInfo.getIsFree()) {
+            holder.priceTV.setText("Free");
+        } else {
+            holder.priceTV.setText(String.valueOf(documentsInfo.getPrice()));
+        }
         // below line is use to set image from URL in our image view.
         Picasso.get().load("https://i.pinimg.com/originals/93/02/32/930232094d590323183bae1ad94c18ce.png").into(holder.bookIV);
 
@@ -98,16 +89,13 @@ public class AdapterDocuments extends RecyclerView.Adapter<AdapterDocuments.Book
     public class BookViewHolder extends RecyclerView.ViewHolder {
         // below line is use to initialize
         // our text view and image views.
-        TextView titleTV, authorsTV, pageCountTV, dateTV, ratingTV;
+        TextView titleTV, priceTV;
         ImageView bookIV;
 
         public BookViewHolder(View itemView) {
             super(itemView);
             titleTV = itemView.findViewById(R.id.idTVTitle);
-            authorsTV = itemView.findViewById(R.id.idTVAuthors);
-            pageCountTV = itemView.findViewById(R.id.idTVPageCount);
-            dateTV = itemView.findViewById(R.id.idTVDate);
-            ratingTV = itemView.findViewById(R.id.idTVRating);
+            priceTV = itemView.findViewById(R.id.idTVPrice);
             bookIV = itemView.findViewById(R.id.idIVBook);
         }
     }
