@@ -119,10 +119,10 @@ public class DocumentsDetails extends AppCompatActivity {
             startActivity(i);
         });
 
-        Toolbar toolbar = binding.toolbar;
-        setSupportActionBar(toolbar);
-        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
-        toolBarLayout.setTitle(getTitle());
+//        Toolbar toolbar = binding.toolbar;
+//        setSupportActionBar(toolbar);
+//        CollapsingToolbarLayout toolBarLayout = binding.toolbarLayout;
+//        toolBarLayout.setTitle(getTitle());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> new RespondFragment(this, getString(R.string.leave_respond_document) + " " + type + "!").show(getSupportFragmentManager(), ""));

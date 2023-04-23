@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,16 +17,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class AdapterDocuments extends RecyclerView.Adapter<AdapterDocuments.BookViewHolder> {
+public class AdapterDocuments extends RecyclerView.Adapter<AdapterDocuments.BookViewHolder> implements Filterable {
 
     // creating variables for arraylist and context.
     private ArrayList<DocumentsInfo> documentsInfoArrayList;
+    private ArrayList<DocumentsInfo> documentsInfoArrayListCopy;
     private Context context;
 
     // creating constructor for array list and context.
     public AdapterDocuments(ArrayList<DocumentsInfo> authorsInfoArrayList, Context context) {
         this.documentsInfoArrayList = authorsInfoArrayList;
+        this.documentsInfoArrayListCopy = authorsInfoArrayList;
         this.context = context;
     }
 
@@ -84,6 +89,37 @@ public class AdapterDocuments extends RecyclerView.Adapter<AdapterDocuments.Book
         // inside get item count method we
         // are returning the size of our array list.
         return documentsInfoArrayList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults filterResults = new FilterResults();
+                if (constraint == null || constraint.length() == 0) {
+                    filterResults.values = documentsInfoArrayListCopy;
+                    filterResults.count = documentsInfoArrayListCopy.size();
+                } else {
+                    String searchString = constraint.toString().toUpperCase(Locale.ROOT);
+                    ArrayList<DocumentsInfo> filteredArrayList = new ArrayList<>();
+                    for (DocumentsInfo documentsInfo : documentsInfoArrayListCopy) {
+                        if (documentsInfo.getTitle().toUpperCase(Locale.ROOT).contains(searchString)) {
+                            filteredArrayList.add(documentsInfo);
+                        }
+                    }
+                    filterResults.values = filteredArrayList;
+                    filterResults.count = filteredArrayList.size();
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                documentsInfoArrayList = (ArrayList<DocumentsInfo>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class BookViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,8 @@
 package com.example.pocketlibray.dashboard;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +19,6 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.pocketlibray.R;
 import com.example.pocketlibray.databinding.FragmentDashboardBinding;
 import com.squareup.picasso.Picasso;
 
@@ -26,21 +28,22 @@ public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     View root;
-    private ArrayList<String> authorsImagesArrayList = new ArrayList<>();
+    private final ArrayList<String> authorsImagesArrayList = new ArrayList<>();
 
-    private Handler handler = new Handler();
-    private int[] fallingBooks = new int[]{R.drawable.book1, R.drawable.book2, R.drawable.book3, R.drawable.book4, R.drawable.book5};
+    //private ArrayList<ArrayList> allDownCoordinates = {{984, 1386}, };
+
+    private final Handler handler = new Handler();
     private int i = 0;
 
     // Define the code block to be executed
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
             // Insert custom code here
             if (i == authorsImagesArrayList.size()) {
                 i = 0;
             }
-            ImageView imageView = binding.authorsImageView2;
+            ImageView imageView = binding.authorsImageView;
             Picasso.get().load(authorsImagesArrayList.get(i)).into(imageView);
             i++;
             // Repeat every 2 seconds
@@ -48,6 +51,7 @@ public class DashboardFragment extends Fragment {
         }
     };
 
+    @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -59,6 +63,16 @@ public class DashboardFragment extends Fragment {
         authorsImagesArrayList.add("https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg");
 
         handler.post(runnable);
+
+        binding.documentsImageView.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), DocumentsActivity.class));
+        });
+        binding.authorsImageView.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), AuthorsActivity.class));
+        });
+        binding.categoriesImageView.setOnClickListener(view -> {
+            startActivity(new Intent(getActivity(), CategoriesActivity.class));
+        });
 
         SensorManager sensorManager = (SensorManager) getContext().getSystemService(Activity.SENSOR_SERVICE);
         Sensor sensorShake = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -73,7 +87,8 @@ public class DashboardFragment extends Fragment {
                     float floatSum = Math.abs(xAcceleration) + Math.abs(yAcceleration) + Math.abs(zAcceleration);
 
                     if (floatSum > 14) {
-
+                        //VIBRATE
+                        throwBooks();
                     }
                 }
             }
@@ -85,10 +100,41 @@ public class DashboardFragment extends Fragment {
 
         sensorManager.registerListener(sensorEventListener, sensorShake, SensorManager.SENSOR_DELAY_NORMAL);
 
-        binding.imageView.setOnLongClickListener(view -> true);
-        //dragLIstenre = View.OnDragListener {}
+        for (int index = 1; index < (binding.constraint).getChildCount(); index++) {
+            View view = (binding.constraint).getChildAt(index);
 
+            view.setOnTouchListener((v, event) -> {
+                float xDown = 0, yDown = 0;
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        xDown = event.getX();
+                        yDown = event.getY();
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        float movedX, movedY;
+                        movedX = event.getX();
+                        movedY = event.getY();
+
+                        float distanceX = movedX - xDown;
+                        float distanceY = movedY - yDown;
+
+                        view.setX(view.getX() + distanceX);
+                        view.setY(view.getY() + distanceY);
+
+                        System.out.println(view.getX() + "YYYYYYYYYYYY" + view.getY());
+
+                        xDown = movedX;
+                        yDown = movedY;
+
+                        break;
+                }
+                return true;
+            });
+        }
         return root;
+    }
+
+    public void throwBooks() {
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.example.pocketlibray;
 
-public class AuthorsInfo
-{
+public class AuthorsInfo {
     private String name;
     private String birthDate;
     private boolean isDead;
     private String deathDate;
+    private String rating;
 
     public AuthorsInfo(String name, String birthDate, boolean isDead, String deathDate) {
         this.name = name;
@@ -36,6 +36,14 @@ public class AuthorsInfo
 
     public void setStatus(boolean isDead) {
         this.isDead = isDead;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public String getDeathDate() {

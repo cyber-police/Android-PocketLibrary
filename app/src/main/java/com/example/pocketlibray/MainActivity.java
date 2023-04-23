@@ -3,11 +3,8 @@ package com.example.pocketlibray;
 import android.os.Bundle;
 
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +13,6 @@ import android.view.View;
 
 import com.example.pocketlibray.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    private ArrayList<DocumentsInfo> documentsInfoArrayList;
-    private ArrayList<AuthorsInfo> authorsInfoArrayList;
-    private ArrayList<CategoriesInfo> categoriesInfoArrayList;
+    public static ArrayList<DocumentsInfo> documentsInfoArrayList;
     private final StringBuilder text = new StringBuilder();
     private int currentTabPosition;
 
@@ -42,12 +36,9 @@ public class MainActivity extends AppCompatActivity {
     ConnectionHelper connectionHelper;
     RecyclerView mRecyclerView;
     DocumentsInfo documentsInfo;
-    AuthorsInfo authorsInfo;
-    CategoriesInfo categoriesInfo;
-    AdapterDocuments adapterDocuments;
+    public AdapterDocuments adapterDocuments;
     AdapterAuthors adapterAuthors;
     AdapterCategories adapterCategories;
-    AdapterSpecifiedDocuments adapterSpecifiedDocuments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +46,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        try {
+            this.getSupportActionBar().hide();
+        }
+        // catch block to handle NullPointerException
+        catch (NullPointerException e) {
+        }
+
 //        mRecyclerView = findViewById(R.id.idRV);
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MainActivity.this, RecyclerView.VERTICAL, false);
 //        mRecyclerView.setLayoutManager(linearLayoutManager);
         connectionHelper = new ConnectionHelper();
         documentsInfoArrayList = new ArrayList<>();
-        authorsInfoArrayList = new ArrayList<>();
-        categoriesInfoArrayList = new ArrayList<>();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        //getTextFromSQL();
+        getTextFromSQL();
     }
 
     private void fillCategories(int param) {
@@ -87,10 +83,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void specificClicked(String chosenSpecific) {
-        adapterSpecifiedDocuments = new AdapterSpecifiedDocuments(documentsInfoArrayList, MainActivity.this, chosenSpecific);
-        mRecyclerView.setAdapter(adapterSpecifiedDocuments);
-    }
+//    public void specificClicked(String chosenSpecific) {
+//        adapterSpecifiedDocuments = new AdapterSpecifiedDocuments(MainActivity.documentsInfoArrayList, this, chosenSpecific);
+//        mRecyclerView.setAdapter(adapterSpecifiedDocuments);
+//    }
 
     public void getTextFromSQL() {
         try {
@@ -146,36 +142,9 @@ public class MainActivity extends AppCompatActivity {
                         if (!isEqual) {
                             documentsInfoArrayList.add(documentsInfo);
                         }
-                        adapterDocuments = new AdapterDocuments(documentsInfoArrayList, MainActivity.this);
+                        adapterDocuments = new AdapterDocuments(documentsInfoArrayList, this);
                     }
                 }
-                Statement authorsStatement = connection.createStatement();
-                ResultSet authorsResultSet = authorsStatement.executeQuery("SELECT * FROM file_author");
-                while (authorsResultSet.next()) {
-                    String name = authorsResultSet.getString("file_author");
-                    String birthDate = authorsResultSet.getString("date_of_birth");
-                    String deathDate = "";
-                    boolean isDead = authorsResultSet.getBoolean("is_dead");
-                    if (isDead) {
-                        deathDate = authorsResultSet.getString("date_death");
-                    }
-                    authorsInfo = new AuthorsInfo(name, birthDate, isDead, deathDate);
-                    authorsInfoArrayList.add(authorsInfo);
-
-                    adapterAuthors = new AdapterAuthors(authorsInfoArrayList, documentsInfoArrayList, MainActivity.this);
-                }
-
-                Statement categoriesStatement = connection.createStatement();
-                ResultSet categoriesResultSet = categoriesStatement.executeQuery("SELECT * FROM file_category");
-                while (categoriesResultSet.next()) {
-                    String categoryTitle = categoriesResultSet.getString("file_category");
-
-                    categoriesInfo = new CategoriesInfo(categoryTitle);
-                    categoriesInfoArrayList.add(categoriesInfo);
-
-                    adapterCategories = new AdapterCategories(categoriesInfoArrayList, MainActivity.this);
-                }
-                mRecyclerView.setAdapter(adapterDocuments);
             }
         } catch (Exception e) {
             Log.e("error", e.getMessage());

@@ -5,9 +5,11 @@
     <string name="documents">Documents</string>
     <string name="title_activity_documents_details">DocumentsDetails</string>
     <string name="document_title">Document Title</string>
+    <string name="authors_name">Authors Name</string>
     <string name="document_author">Document Author</string>
     <string name="number_of_pages">Number of Pages</string>
     <string name="date">Publish Date</string>
+    <string name="years_of_living">Years of Living</string>
     <string name="rating">Rating</string>
     <string name="author_name">Author Name</string>
     <string name="category_name">Category Name</string>
@@ -101,7 +103,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
     <string name="leave_respond_app">Leave a response about this app!</string>
     <string name="leave_respond_document">Leave a response about this</string>
     <string name="languages">Languages</string>
@@ -116,15 +118,10 @@
     <string name="respond_title">Thanks for your responding!</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_account">Account</string>
     <string name="price">Price</string>
-    <string name="title_activity_main">MainActivity</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_documents">Documents</string>
+    <string name="title_activity_authors">Authors</string>
+    <string name="title_activity_categories">Categories</string>
 </resources>
