@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout"
+    style="@style/CustomCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    style="@style/CustomCardView"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp">
 
@@ -29,7 +29,7 @@
             android:padding="3dp"
             android:text="@string/author_name"
             android:textSize="16sp"
-            android:textStyle="italic"/>
+            android:textStyle="italic" />
 
         <TextView
             android:id="@+id/idTVDate"
@@ -41,6 +41,13 @@
             android:padding="3dp"
             android:text="@string/dates_of_living"
             android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/idTVDate"
+            android:layout_toStartOf="@+id/idTVAuthorRating"
+            android:src="@drawable/ic_baseline_star_rate_24" />
 
         <TextView
             android:id="@+id/idTVAuthorRating"

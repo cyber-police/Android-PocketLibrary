@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketlibray.AdapterCategories;
 import com.example.pocketlibray.AdapterSpecifiedDocuments;
+import com.example.pocketlibray.AuthorsInfo;
 import com.example.pocketlibray.CategoriesInfo;
 import com.example.pocketlibray.ConnectionHelper;
 import com.example.pocketlibray.MainActivity;
@@ -28,6 +29,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class CategoriesActivity extends AppCompatActivity {
 
@@ -89,9 +91,9 @@ public class CategoriesActivity extends AppCompatActivity {
 
                     categoriesInfo = new CategoriesInfo(categoryTitle);
                     categoriesInfoArrayList.add(categoriesInfo);
-
-                    adapterCategories = new AdapterCategories(categoriesInfoArrayList, this);
                 }
+                categoriesInfoArrayList.sort(Comparator.comparing(CategoriesInfo::getTitle));
+                adapterCategories = new AdapterCategories(categoriesInfoArrayList, this);
                 mRecyclerView.setAdapter(adapterCategories);
             }
         } catch (Exception e) {

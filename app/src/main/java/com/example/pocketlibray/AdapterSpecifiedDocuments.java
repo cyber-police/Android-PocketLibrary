@@ -60,7 +60,7 @@ public class AdapterSpecifiedDocuments extends RecyclerView.Adapter<AdapterSpeci
             holder.priceTV.setText(String.valueOf(documentsInfo.getPrice()));
         }
         // below line is use to set image from URL in our image view.
-        Picasso.get().load("https://i.pinimg.com/originals/93/02/32/930232094d590323183bae1ad94c18ce.png").into(holder.bookIV);
+        Picasso.get().load(documentsInfo.getImageUrl()).into(holder.bookIV);
 
         // below line is use to add on click listener for our item of recycler view.
         holder.itemView.setOnClickListener(v -> {
@@ -73,6 +73,7 @@ public class AdapterSpecifiedDocuments extends RecyclerView.Adapter<AdapterSpeci
             i.putExtra("available", documentsInfo.getAvailability());
             i.putExtra("authors", documentsInfo.getAuthors());
             i.putExtra("rating", documentsInfo.getRating());
+            i.putExtra("file_image", documentsInfo.getImageUrl());
             i.putExtra("publishedDate", documentsInfo.getPublishedDate());
             i.putExtra("description", documentsInfo.getDescription());
             i.putExtra("pageCount", documentsInfo.getPageCount());

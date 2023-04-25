@@ -19,16 +19,17 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.pocketlibray.MainActivity;
 import com.example.pocketlibray.databinding.FragmentDashboardBinding;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.Random;
 
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     View root;
-    private final ArrayList<String> authorsImagesArrayList = new ArrayList<>();
+    private ImageView documentsImageView, authorsImageView;
 
     //private ArrayList<ArrayList> allDownCoordinates = {{984, 1386}, };
 
@@ -40,14 +41,17 @@ public class DashboardFragment extends Fragment {
         @Override
         public void run() {
             // Insert custom code here
-            if (i == authorsImagesArrayList.size()) {
+            if (i == 3) {
                 i = 0;
             }
-            ImageView imageView = binding.authorsImageView;
-            Picasso.get().load(authorsImagesArrayList.get(i)).into(imageView);
+
+            Picasso.get().load(((MainActivity) requireActivity()).documentsInfoArrayList.get(new Random().nextInt(((MainActivity) requireActivity()).documentsInfoArrayList.size())).getImageUrl()).into(documentsImageView);
+
+            Picasso.get().load(((MainActivity) requireActivity()).authorsInfoArrayList.get(new Random().nextInt(((MainActivity) requireActivity()).authorsInfoArrayList.size())).getAuthorImgUrl()).into(authorsImageView);
+
             i++;
             // Repeat every 2 seconds
-            handler.postDelayed(runnable, 2000);
+            handler.postDelayed(runnable, 3000);
         }
     };
 
@@ -58,9 +62,8 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         root = binding.getRoot();
 
-        authorsImagesArrayList.add("https://cdn.britannica.com/51/12251-050-D5F09630/Arthur-Conan-Doyle-detail-portrait-HL-Gates-1927.jpg");
-        authorsImagesArrayList.add("https://upload.wikimedia.org/wikipedia/uk/3/3f/%D0%9D%D0%B5%D1%81%D1%82%D0%B0%D0%B9%D0%BA%D0%BE_%D0%92%D1%81%D0%B5%D0%B2%D0%BE%D0%BB%D0%BE%D0%B4_%D0%97%D1%96%D0%BD%D0%BE%D0%B2%D1%96%D0%B9%D0%BE%D0%B2%D0%B8%D1%87.jpg");
-        authorsImagesArrayList.add("https://cdn.britannica.com/65/66765-050-63A945A7/JRR-Tolkien.jpg");
+        documentsImageView = binding.documentsImageView;
+        authorsImageView = binding.authorsImageView;
 
         handler.post(runnable);
 
@@ -74,7 +77,7 @@ public class DashboardFragment extends Fragment {
             startActivity(new Intent(getActivity(), CategoriesActivity.class));
         });
 
-        SensorManager sensorManager = (SensorManager) getContext().getSystemService(Activity.SENSOR_SERVICE);
+        SensorManager sensorManager = (SensorManager) requireContext().getSystemService(Activity.SENSOR_SERVICE);
         Sensor sensorShake = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         SensorEventListener sensorEventListener = new SensorEventListener() {
             @Override

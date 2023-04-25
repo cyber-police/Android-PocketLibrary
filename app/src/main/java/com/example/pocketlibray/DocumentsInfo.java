@@ -11,6 +11,7 @@ public class DocumentsInfo {
     private boolean availability;
     private ArrayList<String> authors;
     private float rating;
+    private String imageUrl;
     private int yearOfPublishing;
     private String description;
     private int pageCount;
@@ -83,6 +84,14 @@ public class DocumentsInfo {
         this.rating = rating;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public int getPublishedDate() {
         return yearOfPublishing;
     }
@@ -140,7 +149,7 @@ public class DocumentsInfo {
     }
 
     // creating a constructor class for our BookInfo
-    public DocumentsInfo(String title, String language, String category, String type, int readTimes, boolean availability, ArrayList<String> authors, float rating,
+    public DocumentsInfo(String title, String language, String category, String type, int readTimes, boolean availability, ArrayList<String> authors, float rating, String imageUrl,
                          int yearOfPublishing, String description, int pageCount, float price,
                          boolean isFree) {
         this.title = title;
@@ -151,6 +160,7 @@ public class DocumentsInfo {
         this.availability = availability;
         this.authors = authors;
         this.rating = rating;
+        this.imageUrl = imageUrl;
         this.yearOfPublishing = yearOfPublishing;
         this.description = description;
         this.pageCount = pageCount;

@@ -26,7 +26,7 @@ public class DocumentsDetails extends AppCompatActivity {
     private ActivityBookDetailsBinding binding;
 
     // creating variables for strings,text view, image views and button.
-    String title, language, type, description, previewLink, buyLink, readLink;
+    String title, language, type, description, previewLink, buyLink, imageUrl;
     boolean isAvailable;
     int publishedDate;
     float rating, price;
@@ -67,6 +67,7 @@ public class DocumentsDetails extends AppCompatActivity {
         description = getIntent().getStringExtra("description");
         pageCount = getIntent().getIntExtra("pageCount", 0);
         rating = getIntent().getFloatExtra("rating", 0);
+        imageUrl = getIntent().getStringExtra("file_image");
         price = getIntent().getFloatExtra("price", 0);
         previewLink = getIntent().getStringExtra("previewLink");
         buyLink = getIntent().getStringExtra("buyLink");
@@ -86,10 +87,10 @@ public class DocumentsDetails extends AppCompatActivity {
         languagesTV.setText("Languages: " + language);
         ratingTV.setText("Rating: " + rating);
         publisherTV.setText("Authors: " + authorsBuilder.toString().trim()); //trim() deletes spaces from both ends
-        publishDateTV.setText("Published On : " + publishedDate);
+        publishDateTV.setText("Published In : " + publishedDate);
         descTV.setText(description);
         pageTV.setText("No Of Pages : " + pageCount);
-        Picasso.get().load("https://i.pinimg.com/originals/93/02/32/930232094d590323183bae1ad94c18ce.png").into(bookIV);
+        Picasso.get().load(imageUrl).into(bookIV);
 
         // adding on click listener for our preview button.
         previewBtn.setOnClickListener(v -> {

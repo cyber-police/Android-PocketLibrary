@@ -49,7 +49,7 @@ public class DocumentsActivity extends MainActivity {
         name = getIntent().getStringExtra("name");
 
         if (name != null) {
-            adapterSpecifiedDocuments = new AdapterSpecifiedDocuments(documentsInfoArrayList, this, name);
+            adapterSpecifiedDocuments = new AdapterSpecifiedDocuments(super.documentsInfoArrayList, this, name);
             mRecyclerView.setAdapter(adapterSpecifiedDocuments);
         } else {
             mRecyclerView.setAdapter(super.adapterDocuments);

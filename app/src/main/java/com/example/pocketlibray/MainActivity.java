@@ -22,13 +22,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
-    public static ArrayList<DocumentsInfo> documentsInfoArrayList;
+    public ArrayList<DocumentsInfo> documentsInfoArrayList;
+    public ArrayList<AuthorsInfo> authorsInfoArrayList;
     private final StringBuilder text = new StringBuilder();
     private int currentTabPosition;
 
@@ -37,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     DocumentsInfo documentsInfo;
     public AdapterDocuments adapterDocuments;
-    AdapterAuthors adapterAuthors;
+    AuthorsInfo authorsInfo;
+    public AdapterAuthors adapterAuthors;
     AdapterCategories adapterCategories;
 
     @Override
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //        mRecyclerView.setLayoutManager(linearLayoutManager);
         connectionHelper = new ConnectionHelper();
         documentsInfoArrayList = new ArrayList<>();
+        authorsInfoArrayList = new ArrayList<>();
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String> authorsArray = new ArrayList<>();
                     authorsArray.add(resultSet.getString("file_author"));
                     float rating = resultSet.getFloat("rating");
+                    String imageUrl = resultSet.getString("file_image");
                     int publishedDate = resultSet.getInt("year_published");
                     String description = resultSet.getString("file_description");
                     int pageCount = resultSet.getInt("number_of_pages");
@@ -128,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     //String infoLink =
 
                     // many-to-many connection
-                    documentsInfo = new DocumentsInfo(title, language, category, type, readTimes, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
+                    documentsInfo = new DocumentsInfo(title, language, category, type, readTimes, availability, authorsArray, rating, imageUrl, publishedDate, description, pageCount, price, isFree);
                     if (documentsInfoArrayList.isEmpty()) {
                         documentsInfoArrayList.add(documentsInfo);
                     } else {
@@ -142,9 +149,27 @@ public class MainActivity extends AppCompatActivity {
                         if (!isEqual) {
                             documentsInfoArrayList.add(documentsInfo);
                         }
-                        adapterDocuments = new AdapterDocuments(documentsInfoArrayList, this);
                     }
                 }
+                documentsInfoArrayList.sort(Comparator.comparing(DocumentsInfo::getTitle));
+                adapterDocuments = new AdapterDocuments(documentsInfoArrayList, this);
+                Statement authorsStatement = connection.createStatement();
+                ResultSet authorsResultSet = authorsStatement.executeQuery("SELECT * FROM file_author");
+                while (authorsResultSet.next()) {
+                    String name = authorsResultSet.getString("file_author");
+                    String birthDate = authorsResultSet.getString("date_of_birth");
+                    String deathDate = "";
+                    boolean isDead = authorsResultSet.getBoolean("is_dead");
+                    String authorImgUrl = authorsResultSet.getString("photo");
+                    String biography = authorsResultSet.getString("biography");
+                    if (isDead) {
+                        deathDate = authorsResultSet.getString("date_death");
+                    }
+                    authorsInfo = new AuthorsInfo(name, birthDate, isDead, authorImgUrl, biography, deathDate);
+                    authorsInfoArrayList.add(authorsInfo);
+                }
+                authorsInfoArrayList.sort(Comparator.comparing(AuthorsInfo::getName));
+                adapterAuthors = new AdapterAuthors(authorsInfoArrayList, documentsInfoArrayList, this);
             }
         } catch (Exception e) {
             Log.e("error", e.getMessage());

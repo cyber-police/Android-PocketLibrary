@@ -3,7 +3,6 @@ package com.example.pocketlibray;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +14,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketlibray.dashboard.AuthorsActivity;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Locale;
-import java.util.function.Function;
 
 public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorViewHolder> implements Filterable {
 
     // creating variables for arraylist and context.
     private ArrayList<AuthorsInfo> authorsInfoArrayList;
     private ArrayList<AuthorsInfo> authorsInfoArrayListCopy;
+    private ArrayList<String> authorsLanguagesArrayList;
     private ArrayList<DocumentsInfo> documentsInfoArrayList;
     private Context context;
     private float authorsRating, numberOfWrittenDocuments;
@@ -56,6 +56,8 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
         authorsRating = 0;
         numberOfWrittenDocuments = 0;
 
+        authorsLanguagesArrayList = new ArrayList<>();
+
         AuthorsInfo authorsInfo = authorsInfoArrayList.get(position);
 
         holder.nameTV.setText(authorsInfo.getName());
@@ -68,16 +70,19 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
             if (documentsInfo.getAuthors().contains(authorsInfo.getName())) {
                 numberOfWrittenDocuments++;
                 authorsRating += documentsInfo.getRating();
+                authorsLanguagesArrayList.add(documentsInfo.getLanguage());
             }
         }
-        authorsInfo.setRating(Float.toString(authorsRating / numberOfWrittenDocuments));
+        authorsInfo.setRating(Float.toString(Float.parseFloat(new DecimalFormat("#.0").format(authorsRating / numberOfWrittenDocuments))));
+        Collections.sort(authorsLanguagesArrayList);
+        authorsInfo.setLanguages(authorsLanguagesArrayList);
         holder.ratingTV.setText(authorsInfo.getRating());
         // below line is use to set image from URL in our image view.
-        Picasso.get().load("https://static-00.iconduck.com/assets.00/incognito-icon-512x487-o2l6p9u6.png").into(holder.authorIV);
+        Picasso.get().load(authorsInfo.getAuthorImgUrl()).into(holder.authorIV);
         // change image color using themes
-        TypedValue typedValue = new TypedValue();
-        context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorSecondary, typedValue, true);
-        holder.authorIV.setColorFilter(typedValue.data);
+//        TypedValue typedValue = new TypedValue();
+//        context.getTheme().resolveAttribute(com.google.android.material.R.attr.colorSecondary, typedValue, true);
+//        holder.authorIV.setColorFilter(typedValue.data);
 
         // below line is use to add on click listener for our item of recycler view.
         holder.itemView.setOnClickListener(v -> {
@@ -89,6 +94,9 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
                 i.putExtra("living", authorsInfo.getBirthDate());
             }
             i.putExtra("rating", authorsInfo.getRating());
+            i.putExtra("languages", authorsInfo.getLanguages());
+            i.putExtra("biography", authorsInfo.getBiography());
+            i.putExtra("photo", authorsInfo.getAuthorImgUrl());
             // after passing that data we are
             // starting our new  intent.
             context.startActivity(i);

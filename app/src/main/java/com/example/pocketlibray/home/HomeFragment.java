@@ -95,6 +95,7 @@ public class HomeFragment extends Fragment {
                     ArrayList<String> authorsArray = new ArrayList<>();
                     authorsArray.add(resultSet.getString("file_author"));
                     float rating = resultSet.getFloat("rating");
+                    String imageUrl = resultSet.getString("file_image");
                     int publishedDate = resultSet.getInt("year_published");
                     String description = resultSet.getString("file_description");
                     int pageCount = resultSet.getInt("number_of_pages");
@@ -106,7 +107,7 @@ public class HomeFragment extends Fragment {
                     //String infoLink =
 
                     // many-to-many connection
-                    documentsInfo = new DocumentsInfo(title, language, category, type, readTimes, availability, authorsArray, rating, publishedDate, description, pageCount, price, isFree);
+                    documentsInfo = new DocumentsInfo(title, language, category, type, readTimes, availability, authorsArray, rating, imageUrl, publishedDate, description, pageCount, price, isFree);
                     if (documentsInfoArrayList.isEmpty()) {
                         documentsInfoArrayList.add(documentsInfo);
                     } else {
@@ -159,7 +160,7 @@ public class HomeFragment extends Fragment {
 
         topRatedArrayList.clear();
         mostReadArrayList.clear();
-        
+
         for (DocumentsInfo documentsInfo : documentsInfoArrayList) {
             if (!documentsInfo.getIsFree()) {
                 topRatedArrayList.add(documentsInfo);
