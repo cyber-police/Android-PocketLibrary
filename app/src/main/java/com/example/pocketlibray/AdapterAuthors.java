@@ -73,7 +73,7 @@ public class AdapterAuthors extends RecyclerView.Adapter<AdapterAuthors.AuthorVi
                 authorsLanguagesArrayList.add(documentsInfo.getLanguage());
             }
         }
-        authorsInfo.setRating(Float.toString(Float.parseFloat(new DecimalFormat("#.0").format(authorsRating / numberOfWrittenDocuments))));
+        authorsInfo.setRating(new DecimalFormat("#.0").format(authorsRating / numberOfWrittenDocuments));
         Collections.sort(authorsLanguagesArrayList);
         authorsInfo.setLanguages(authorsLanguagesArrayList);
         holder.ratingTV.setText(authorsInfo.getRating());
