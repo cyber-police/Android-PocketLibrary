@@ -9,8 +9,8 @@ import com.example.pocketlibray.AdapterSpecifiedDocuments;
 import com.example.pocketlibray.ConnectionHelper;
 import com.example.pocketlibray.MainActivity;
 import com.example.pocketlibray.R;
+import com.example.pocketlibray.RespondFragment;
 import com.example.pocketlibray.databinding.ActivityDocumentsBinding;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -43,8 +43,7 @@ public class DocumentsActivity extends MainActivity {
         LinearLayoutManager linearLayoutManager = new GridLayoutManager(this, NUMBER_IN_ROW);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        binding.fab.setOnClickListener(view -> new RespondFragment(this, getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), ""));
 
         name = getIntent().getStringExtra("name");
 

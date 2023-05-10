@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.PocketLibray.AppBarOverlay">
@@ -13,7 +14,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorOnPrimary"
+            android:background="?attr/colorPrimaryVariant"
+            android:theme="@style/ToolbarTheme"
             app:popupTheme="@style/Theme.PocketLibray.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -31,6 +33,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
+        app:backgroundTint="?attr/colorPrimary"
         app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

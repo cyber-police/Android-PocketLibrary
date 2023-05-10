@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import com.example.pocketlibray.CategoriesInfo;
 import com.example.pocketlibray.ConnectionHelper;
 import com.example.pocketlibray.MainActivity;
 import com.example.pocketlibray.R;
+import com.example.pocketlibray.RespondFragment;
 import com.example.pocketlibray.databinding.ActivityDocumentsBinding;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,8 +63,7 @@ public class CategoriesActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        binding.fab.setOnClickListener(view -> new RespondFragment(this, getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), ""));
 
         getTextFromSQL();
     }

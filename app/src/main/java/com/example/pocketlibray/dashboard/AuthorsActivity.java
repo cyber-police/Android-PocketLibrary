@@ -3,6 +3,7 @@ package com.example.pocketlibray.dashboard;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 
 import androidx.core.view.MenuItemCompat;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pocketlibray.MainActivity;
 import com.example.pocketlibray.R;
+import com.example.pocketlibray.RespondFragment;
 import com.example.pocketlibray.databinding.ActivityDocumentsBinding;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -33,8 +35,7 @@ public class AuthorsActivity extends MainActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
-        binding.fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        binding.fab.setOnClickListener(view -> new RespondFragment(this, getString(R.string.leave_respond_app)).show(getSupportFragmentManager(), ""));
 
         mRecyclerView.setAdapter(super.adapterAuthors);
     }
